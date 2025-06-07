@@ -1,8 +1,7 @@
 import streamlit as st
-from PIL import Image
+from PIL import Image, ImageDraw
 import io
 import numpy as np
-import cv2
 
 # --- Seiteneinstellungen ---
 st.set_page_config(page_title="Bild anpassen & komprimieren", layout="centered")
@@ -77,14 +76,10 @@ if bilddatei:
     show_frame = st.checkbox("🔲 Zielrahmen im Originalbild anzeigen")
 
     if show_frame:
-        img_array = np.array(resized)
-        img_array = cv2.rectangle(
-            img_array.copy(),
-            (x_offset, y_offset),
-            (x_offset + z_breite, y_offset + z_hoehe),
-            (255, 0, 0), 2
-        )
-        st.image(img_array, caption="🔲 Zielausschnitt im Originalbild")
+        rahmenbild = resized.copy()
+        draw = ImageDraw.Draw(rahmenbild)
+        draw.rectangle([(x_offset, y_offset), (x_offset + z_breite, y_offset + z_hoehe)], outline="red", width=3)
+        st.image(rahmenbild, caption="🔲 Zielausschnitt im Originalbild")
 
     st.image(cropped, caption=f"{z_breite}×{z_hoehe}px, Qualität: {qualitaet}%")
 
@@ -103,12 +98,11 @@ if bilddatei:
 
 # --- Nutzeranleitung ---
 st.sidebar.title("📘 Anleitung")
-st.sidebar.markdown("""
-1. **Bild hochladen** (JPG oder PNG)
-2. **Zielgröße auswählen** oder eigene Maße eingeben
-3. **Ausschnitt verschieben**, falls gewünscht
-4. **Zielrahmen anzeigen** zur besseren Vorschau
-5. **Qualität wählen** für optimale Komprimierung
+st.sidebar.markdown(\"\"\"
+1. **Bild hochladen** (JPG oder PNG)  
+2. **Zielgröße auswählen** oder eigene Maße eingeben  
+3. **Ausschnitt verschieben**, falls gewünscht  
+4. **Zielrahmen anzeigen** zur besseren Vorschau  
+5. **Qualität wählen** für optimale Komprimierung  
 6. **Herunterladen** – fertig fürs Web oder Social Media!
-""")
-
+\"\"\")
