@@ -98,11 +98,11 @@ if bilddatei:
 
 # --- Nutzeranleitung ---
 st.sidebar.title("📘 Anleitung")
-st.sidebar.markdown(\"\"\"
+st.sidebar.markdown("""
 1. **Bild hochladen** (JPG oder PNG)  
 2. **Zielgröße auswählen** oder eigene Maße eingeben  
 3. **Ausschnitt verschieben**, falls gewünscht  
 4. **Zielrahmen anzeigen** zur besseren Vorschau  
 5. **Qualität wählen** für optimale Komprimierung  
 6. **Herunterladen** – fertig fürs Web oder Social Media!
-\"\"\")
+""")
